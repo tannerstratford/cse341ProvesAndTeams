@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../includes/header.ejs %>
+</head>
+
+<body>
+  <% include ../includes/nav.ejs %>
+    <div class="jumbotron text-center">
+      <div class="container">
+        <h1>
+          <%= title %>
+        </h1>
+      </div>
+    </div>
+    <div class="container">
+      <div>
+        <form action="/ta02/addUser" method="POST">
+          <input type="text" name="newUser">
+          <button type="submit">Add User</button>
+        </form>
+      </div>
+
+      <div>
+        <form action="/ta02/removeUser" method="POST">
+          <label for="removeUser">Username to remove</label><br>
+          <input type="text" name="removeUser">
+          <button type="submit">Remove User</button>
+        </form>
+      </div>
+
+      <div>
+        <h2>Users:</h2>
+        <% for(user of users) { %>
+          <p>
+            <%= user %>
+          </p>
+          <% } %>
+      </div>
+      <div>
+        <% if(removalError == true) { %>
+          <p>
+            Error: Name not found
+          </p>
+          <% } %>
+      </div>
+      <div>
+        <% if(duplicateError == true) { %>
+          <p>
+            Error: Duplicate name
+          </p>
+          <% } %>
+      </div>
+    </div>
+</body>
+
+</html>
