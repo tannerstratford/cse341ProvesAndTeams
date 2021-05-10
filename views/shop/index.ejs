@@ -1,0 +1,49 @@
+<%- include('../includes/shophead.ejs') %>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="/css/results.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <%- include('../includes/shopnavigation.ejs') %>
+
+    <main>
+        <div class="container">
+            <h1>Shop</h1>
+            <% for (var i=0; i < prods.length; i++) { %>
+              <% if(i % 3==0) { %>
+                <div class="card-deck">
+                  <% } %>
+                    <div class="card cCard">
+                     <img src="<%= prods[i].imageUrl %>" class="card-img-top cImage"> 
+                      <div class="card-body">
+                        <h5 class="card-title">
+                          <%= prods[i].name %>
+                        </h5>
+                        <h6>
+                          <%= prods[i].price %>
+                        </h6>
+                        <p class="card-text cText">
+                          <%= prods[i].description %>
+                        </p>
+
+                        <div>
+                            <a href="/prove03/products/<%= prods[i].name %>" class = "btn">Details</a>
+                            
+                                    
+                        </div>
+                      </div>
+                    </div>
+                    <% if(i % 3==2) { %>
+                </div>
+                <br>
+                <% } %>
+        
+                  <% } %>
+          </div>
+    </main>
+<%- include('../includes/end.ejs') %>
+
+
+
+
