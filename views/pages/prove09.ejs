@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Pokemon data</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="/css/results.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div class="container">
+    <h1>Pokemon data</h1>
+    <%console.log(data.results)%>
+    <ul>
+    <% for (var i= 0; i < 10 && i < data.results.length; i++) { %>
+          <li> <%= data.results[i].name %></li>      
+        <br>
+        <% } %>
+    </ul>
+
+         
+        </div>
+          <div class = "container">
+          <div style = "display: inline-block;">
+          <form action="/prove09/0">
+            <button type = submit>First Page</button>
+          </form>
+          </div>
+          <div style = "display: inline-block;">
+          <%if(offset < 1108) { %>
+            <form action="/prove09/<%=parseInt(offset) + 10%>">
+              <button type = submit>Next Page</button>
+            </form>
+            <% } %>
+          </div>
+          <div style = "display: inline-block;">
+            <%if(offset >= 10) { %>
+              <form action="/prove09/<%=parseInt(offset) - 10%>">
+                <button type = submit>Previous Page</button>
+              </form>
+              <% } %>
+          </div>
+          <div style = "display: inline-block;">
+            <form action="/prove09/1108">
+              <button type = submit>Last Page</button>
+            </form>
+          </div>
+        </div>
+        
+             
+          
+  
+</body>
+
+</html>
