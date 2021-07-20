@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Avengers data</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="/css/results.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body style = "background-color: beige;">
+  <div class="container">
+    <h1 style = "text-align: center;">Avengers data</h1>
+    <%console.log("Views", data)%>
+    <ul>
+    <% for (var i= 0; i < data.avengers.length; i++) { %>
+          <li> <%=data.avengers[i].name%></li> 
+            
+          <%if(data.avengers[i].attributeName.length > 0){%>
+            
+              <%for(var j = 0; j < data.avengers[i].attributeName.length; j++){%>
+                 <p> <%=data.avengers[i].attributeName[j]%> - <%=data.avengers[i].attributeValue[j]%></p>
+              <%}%>
+          <%} %>
+          <form action="/prove10/insertAttribute" method="POST">
+            Add Attribute Name <input type="text" name = "attributeName" id = "attributeName"> 
+            Add Attribute Value<input type="text" name = "attributeValue" id = "attributeValue"> 
+            <input type = "hidden" name = "iteration" id = "iteration" value = <%=i%>>
+            <button type="submit">Add</button>
+        </form>  
+        <br>
+        <% } %>
+    </ul> 
+
+    <form action="/prove10/insert" method="POST">
+    <input type="text" name = "avenger" id = "avenger"> Add avenger
+    <button type="submit">Add</button>
+</form>
+</body>
+
+</html>
