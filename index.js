@@ -11,6 +11,7 @@
  * IMPORTANT: Make sure to run "npm install" in your root before "npm start"
  *******************************************************************************/
 // Our initial setup (package requires, port number setup)
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -25,6 +26,7 @@ const errorController = require('./controllers/error');
 const User = require('./models/user');
 
 const app = express();
+
 // const store = new MongoDBStore({
 //   uri: key.MongoDBURI,
 //   collection: 'sessions'
@@ -42,6 +44,7 @@ const prove03Routes = require('./routes/prove03-routes');
 const prove08Routes = require('./routes/prove08-routes');
 const prove09Routes = require('./routes/prove09-routes');
 const prove10Routes = require('./routes/prove10-routes');
+const prove11Routes = require('./routes/prove11-routes');
 
 app.use(session({secret: 'mySecret', resave: false, saveUninitialized: false}));
 
@@ -64,6 +67,7 @@ app.use(express.static(path.join(__dirname, 'public')))
    .use('/prove08', prove08Routes)
    .use('/prove09', prove09Routes)
    .use('/prove10', prove10Routes)
+   .use('/prove11', prove11Routes)
    .get('/', (req, res, next) => {
      // This is the primary index, always handled last. 
      res.render('pages/index', {title: 'Welcome to my CSE341 repo', path: '/'});
@@ -72,4 +76,37 @@ app.use(express.static(path.join(__dirname, 'public')))
      // 404 page
      res.render('pages/404', {title: '404 - Page Not Found', path: req.url})
    })
-   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+
+const server = app.listen(PORT);
+const io = require('socket.io')(server)
+
+var dummyData;
+function ioUpdate() {
+  io.on('update-list', () => {
+    dummyData = require('../data/prove11-data.json')
+    router.get('/', (req, res, next) => { 
+      res.render('pages/prove11', {
+          title: 'Team Activity 11',
+          path: '/teamActivities/11',
+          data: dummyData
+      });
+  });
+    
+  })
+}
+function emitUpdate() {
+  io.emit('update-list')
+  console.log("emitUpdate called")
+}
+
+io.on('connection', (socket) => {
+  console.log('Clients connected');
+
+  socket.on('new-name', () => {
+    socket.broadcast.emit('update-list');
+  });
+});
+
+exports.ioUpdate = ioUpdate()
+exports.emitUpdate = emitUpdate()
+   
